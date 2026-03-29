@@ -1,0 +1,60 @@
+:root {
+    --bg: #030508; --sidebar: #080a0f; --card: rgba(17, 21, 31, 0.9); --border: rgba(255,255,255,0.06);
+    --accent: #3b82f6; --accent-glow: rgba(59, 130, 246, 0.3);
+    --green: #10b981; --red: #ef4444; --text: #f8fafc; --muted: #64748b;
+}
+
+/* ANIMATIONS */
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleBounce { 0% { transform: scale(0.8); opacity: 0; } 70% { transform: scale(1.03); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes successPop { 0% { transform: scale(1); } 50% { transform: scale(1.05); background: var(--green); } 100% { transform: scale(1); background: var(--green); } }
+@keyframes toastIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+
+* { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+body { margin: 0; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; width: 100vw; }
+
+/* Sidebar */
+.sidebar { width: 85px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 30px 0; gap: 25px; z-index: 100; }
+.nav-btn { width: 54px; height: 54px; border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); }
+.nav-btn.active { background: var(--accent); color: white; box-shadow: 0 10px 20px var(--accent-glow); }
+
+/* Main Content */
+.main { flex: 1; padding: 40px; overflow-y: auto; scrollbar-width: none; position: relative; }
+.section-container { display: flex; flex-direction: column; gap: 30px; max-width: 1400px; margin: 0 auto; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 30px; padding: 30px; backdrop-filter: blur(10px); animation: slideUp 0.8s forwards; position: relative; }
+.card-label { color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 15px; display: block; }
+
+/* Dashboard Stats */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 10px; }
+.cal-cell { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; min-height: 70px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; }
+
+/* Table & Delete */
+table { width: 100%; border-spacing: 0 10px; border-collapse: separate; }
+td { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 15px; font-weight: 600; }
+.del-btn { color: var(--muted); cursor: pointer; font-size: 18px; border: none; background: none; }
+.del-btn:hover { color: var(--red); transform: scale(1.2); }
+
+/* THE MODAL */
+.modal-overlay { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); opacity: 0; }
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal { background: #111827; width: 500px; padding: 40px; border-radius: 40px; border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+.modal-overlay.active .modal { animation: scaleBounce 0.5s forwards; }
+
+input, select { background: #1f2937 !important; border: 1px solid var(--border); padding: 16px; border-radius: 16px; color: white !important; width: 100%; outline: none; margin-bottom: 20px; }
+input:focus { border-color: var(--accent); }
+
+/* Toast */
+#toast { position: fixed; top: 30px; right: 30px; background: var(--green); color: white; padding: 15px 30px; border-radius: 15px; font-weight: 800; z-index: 11000; display: none; animation: toastIn 0.5s forwards; }
+
+/* FAB Button - FIXED AT ROOT */
+.fab { 
+    position: fixed; bottom: 40px; right: 40px; width: 75px; height: 75px; 
+    border-radius: 25px; background: var(--accent); color: white; border: none; 
+    font-size: 40px; cursor: pointer; z-index: 99999 !important; 
+    box-shadow: 0 15px 35px rgba(59,130,246,0.5);
+}
+.fab:hover { transform: scale(1.1) rotate(90deg); background: #2563eb; }
+
+.btn-action { width: 100%; padding: 18px; background: var(--accent); color: white; border: none; border-radius: 18px; font-weight: 800; cursor: pointer; }
+.btn-action.success { animation: successPop 0.6s forwards; background: var(--green); }
